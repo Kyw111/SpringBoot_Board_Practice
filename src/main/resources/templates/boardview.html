@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세 페이지</title>
+</head>
+<style>
+    .layout {
+        width : 500px;
+        margin : 0 auto;
+        margin-top : 40px;
+    }
+</style>
+<body>
+
+    <div class="layout">
+        <h1 th:text="${board.title}">제목입니다</h1>
+        <hr>
+        <p th:text="${board.content}">내용이 들어갈 영역입니다</p>
+        <a th:href="@{/board/delete(id=${board.id})}">삭제</a>
+    </div>
+
+</body>
+</html>
