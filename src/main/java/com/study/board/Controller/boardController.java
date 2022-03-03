@@ -17,14 +17,12 @@ public class boardController {
 
     @GetMapping("/board/write")
     public String boardWriteForm() {
-
         return "boardwrite";
     }
     @PostMapping("/board/writepro")
     public String boardWritePro(Board board) {
-
-        boardService.Write(board);
-        return "";
+        boardService.write(board);
+        return "boardview";
     }
 
     @GetMapping("/board/list")
@@ -43,5 +41,22 @@ public class boardController {
     public String boardDelete(Integer id){
         boardService.boardDelete(id);
         return "redirect:/board/list"; // redirect: 하고서는 redirect할 페이지의 url주소를 명시
+    }
+
+    @GetMapping("/board/modify/{id}")
+    public String boardModify(@PathVariable Integer id, Model model){
+        model.addAttribute("board", boardService.boardView(id));
+        return "boardmodify";
+    }
+
+    @PostMapping("/board/update/{id}") //url의 id를 @PathVariable이 Integer id로 넣어줌
+    public String boardUpdate(@PathVariable("id") Integer id, Board board){//boardWrite와 똑같이 board로 받아옴
+
+        Board boardTemp = boardService.boardView(id); // 기존에 작성했던 글이 담겨져서 옴
+        boardTemp.setTitle(board.getTitle()); //덮어씌우기 - 기존의 내용에다가 새로 작성한 글의 내용을
+        boardTemp.setContent(board.getContent()); //덮어씌우기 - 기존의 내용에다가 새로 작성한 글의 내용을
+
+        boardService.write(boardTemp); // 수정한 내용 레포지토리에 반영
+        return "redirect:/board/list";
     }
 }

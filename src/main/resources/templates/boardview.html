@@ -18,6 +18,7 @@
         <hr>
         <p th:text="${board.content}">내용이 들어갈 영역입니다</p>
         <a th:href="@{/board/delete(id=${board.id})}">삭제</a>
+        <a th:href="@{/board/modify/{id}(id = ${board.id})}";>수정</a>
     </div>
 
 </body>

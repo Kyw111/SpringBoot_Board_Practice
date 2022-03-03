@@ -16,7 +16,7 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     //새글 작성
-    public void Write(Board board) {
+    public void write(Board board) {
         boardRepository.save(board);
     }
 
