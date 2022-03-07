@@ -20,9 +20,11 @@ public class boardController {
         return "boardwrite";
     }
     @PostMapping("/board/writepro")
-    public String boardWritePro(Board board) {
+    public String boardWritePro(Board board, Model model) {
         boardService.write(board);
-        return "boardview";
+        model.addAttribute("message", "글 작성이 완료되었습니다");
+        model.addAttribute("searchUrl", "/board/list");
+        return "message";
     }
 
     @GetMapping("/board/list")
@@ -37,10 +39,19 @@ public class boardController {
         return "boardview";
     }
 
+//    @GetMapping("/board/delete")
+//    public String boardDelete(Integer id){
+//        boardService.boardDelete(id);
+//        return "redirect:/board/list"; // redirect: 하고서는 redirect할 페이지의 url주소를 명시
+//    }
     @GetMapping("/board/delete")
-    public String boardDelete(Integer id){
+    public String boardDelete(Integer id, Model model){
         boardService.boardDelete(id);
-        return "redirect:/board/list"; // redirect: 하고서는 redirect할 페이지의 url주소를 명시
+
+        model.addAttribute("message", "글 삭제 완료");
+        model.addAttribute("searchUrl", "/board/list");
+//        return "redirect:/board/list"; // redirect: 하고서는 redirect할 페이지의 url주소를 명시
+        return "message";
     }
 
     @GetMapping("/board/modify/{id}")
@@ -50,13 +61,16 @@ public class boardController {
     }
 
     @PostMapping("/board/update/{id}") //url의 id를 @PathVariable이 Integer id로 넣어줌
-    public String boardUpdate(@PathVariable("id") Integer id, Board board){//boardWrite와 똑같이 board로 받아옴
+    public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model){//boardWrite와 똑같이 board로 받아옴
 
         Board boardTemp = boardService.boardView(id); // 기존에 작성했던 글이 담겨져서 옴
         boardTemp.setTitle(board.getTitle()); //덮어씌우기 - 기존의 내용에다가 새로 작성한 글의 내용을
         boardTemp.setContent(board.getContent()); //덮어씌우기 - 기존의 내용에다가 새로 작성한 글의 내용을
 
+        model.addAttribute("message", "글 수정 완료"); // 수정완료 메세지 띄우기
+        model.addAttribute("searchUrl", "/board/list"); //메세지 띄워주고 list페이지로 이동
+
         boardService.write(boardTemp); // 수정한 내용 레포지토리에 반영
-        return "redirect:/board/list";
+        return "message";
     }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/ //자바스크립트에서 model데이터를 확인하려면 CDATA구문을 명시해줘야함
+    var message = [[${message}]]; // 모델에 등록한 message를 받아와서 담아줌
+    alert(message);
+
+    location.replace([[${searchUrl}]]); // 이동시킬 페이지 경로로 담아서 보내줌
+
+    /*]]>*/
+
+</script>
+<body>
+
+</body>
+</html>
