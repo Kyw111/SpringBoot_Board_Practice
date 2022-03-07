@@ -24,4 +24,10 @@ public class Board {
     @Column
     private String content;
 
+    @Column
+    private String filename;
+
+    @Column
+    private String filepath;
+
 }

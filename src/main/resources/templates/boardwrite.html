@@ -24,10 +24,11 @@
 </style>
 <body>
 
-    <div class="layout">
-        <form action="/board/writepro" method="post">
+    <div class="layout">         <!--파일업로드를 위한 속성추가 : enctype="multipart/form-data"-->
+        <form action="/board/writepro" method="post" enctype="multipart/form-data">
             <input name="title"type="text">
             <textarea name="content"></textarea>
+            <input type="file" name="file"> <!--name속성에 file을 넣어줘야지 null포인트exception이 안남-->
             <button type="submit">작성하기</button>
         </form>
     </div>

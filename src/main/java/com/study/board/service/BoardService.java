@@ -5,9 +5,13 @@ import com.study.board.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BoardService {
@@ -16,7 +20,21 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     //새글 작성
-    public void write(Board board) {
+    public void write(Board board, MultipartFile file) throws Exception {
+        // 파일을 업로드할 저장경로부터 지정
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        // 파일 이름에 붙여줄 랜덤id를 생성
+        UUID uuid = UUID.randomUUID();
+        // 위에 랜덤uuid와 원래 파일명을 합쳐서 파일이름 정의
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        // File클래스로 new객체생성으로 위에서 정한 파일저장경로, 파일명 선언
+        File saveFile = new File(projectPath, fileName); // 파일을 생성하는데 projectPath경로에 fileName이란 이름으로 담을거란 의미
+        // transferTo는 에러가 뜨는데 위에 Throws Exception 해주면 됨
+        file.transferTo(saveFile);
+
+        board.setFilename(fileName); // DB에다가 fileName을 저장하게 함
+        board.setFilepath("/files/" + fileName); // DB에다가 file경로를 저장하게 함
+
         boardRepository.save(board);
     }
 
