@@ -25,6 +25,7 @@ public class boardController {
         boardService.write(board, file);
         model.addAttribute("message", "글 작성이 완료되었습니다");
         model.addAttribute("searchUrl", "/board/list");
+        model.addAttribute("image", "/board/view"); //상세페이지에서 이미지보이게
         return "message";
     }
 
