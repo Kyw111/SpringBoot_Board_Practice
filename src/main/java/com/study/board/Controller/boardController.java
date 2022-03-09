@@ -16,6 +16,11 @@ public class boardController {
     @Autowired
     private BoardService boardService;
 
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
     @GetMapping("/board/write")
     public String boardWriteForm() {
         return "boardwrite";

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">홈으로</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" th:href="@{/board/list}">글 목록</a>
+                        <a class="nav-link" th:href="@{/board/write}">글 작성</a>
+                    </div>
+                </div>
+            </div>
+        </nav> <!-- 네브바 끝-->
+
+
+        <div th:fragment="footer"> <!-- footer -->
+            <footer class="py-3 my-4">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"><a href="https://github.com/Kyw111" class="nav-link px-2 text-muted">Github</a></li>
+                    <li class="nav-item"><a href="https://google.com" class="nav-link px-2 text-muted">Google</a></li>
+                </ul>
+                <p class="text-center text-muted">&copy; 2022 KYW111, Inc</p>
+            </footer>
+        </div> <!-- footer 끝-->
+
+    </body>
+</html>
