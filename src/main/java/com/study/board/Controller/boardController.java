@@ -3,6 +3,10 @@ package com.study.board.Controller;
 import com.study.board.entity.Board;
 import com.study.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +39,19 @@ public class boardController {
     }
 
     @GetMapping("/board/list")
-    public String boardList(Model model){
-        model.addAttribute("list",boardService.boardList());
+    public String boardList(Model model, // 0페이지가 1페이지, 한번에 10개의 게시글 보이게, 정렬은 id로, 정렬순서는 역순(DESC)
+                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
+        Page<Board> list = boardService.boardList(pageable);
+
+        int nowPage = list.getPageable().getPageNumber() + 1; // pageable에서 넘어온 현재페이지를 담아줌 - 1을 더해줘야 0페이지가 1페이지가 됨
+        int startPage = Math.max(nowPage - 3, 1); // start페이지는 1일 수 밖에 없으므로 Math.max를 활용하여 매개값 2개중 1이 반환될 수 있도록 처리
+        int endPage = Math.min(nowPage + 3, list.getTotalPages()); // 위와 같은 원리로 마지막페이지 처리 - getTotalPages()는 전체 페이지의 수를 말함
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "boardlist";
     }
 
