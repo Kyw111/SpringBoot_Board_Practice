@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec =" http://www.thymeleaf.org/extras/spring-security">
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="nav">
             <div class="container-fluid">
@@ -13,7 +13,17 @@
                         <a class="nav-link" th:href="@{/board/write}">글 작성</a>
                     </div>
                 </div>
+                                                <!-- sec:authorize="!isAuthenticated() - 로그인이 되지 않았을때 아래 두 a태그가 보이게됨-->
+                <a class="btn btn-outline-primary" th:href="@{/account/login}" sec:authorize="!isAuthenticated()">로그인</a>
+                <a class="btn btn-outline-primary mx-2" th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
+                <form class="d-flex" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                    <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+                    <span class="mx-2" sec:authentication="name">사용자</span>
+                    <span class="mx-2" sec:authentication="principal.authorities">권한</span>
+                    <button class="btn btn-outline-primary" type="submit">Logout</button>
+                </form>
             </div>
+
         </nav> <!-- 네브바 끝-->
 
 
