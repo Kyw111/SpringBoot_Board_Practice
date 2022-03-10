@@ -64,12 +64,14 @@
             <tr>
                 <th scope="col">글 번호</th>
                 <th scope="col">제목</th>
+                <th scope="col">작성자</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="board : ${list}">
-                <th th:text="${board.id}"scope="row">id</th>
+                <td th:text="${board.id}">id</td>
                 <td><a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}">제목</a></td>
+                <td>홍길동</td>
             </tr>
         </tbody>
     </table>
@@ -87,7 +89,7 @@
             </li>
             <li th:each="page : ${#numbers.sequence(startPage, endPage)}"class="page-item">
                 <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1})}" th:text="${page}" class="page-link"></a>
-                <a th:if="${page == nowPage}" th:text="${page}" class="page-link" style="color:red"></a>
+                <strong><a th:if="${page == nowPage}" th:text="${page}" class="page-link" style="color:red"></a></strong>
             </li>
             <li>
                 <a class="page-link" href="#">Next</a>

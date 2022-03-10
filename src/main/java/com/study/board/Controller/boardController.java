@@ -44,8 +44,8 @@ public class boardController {
         Page<Board> list = boardService.boardList(pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1; // pageable에서 넘어온 현재페이지를 담아줌 - 1을 더해줘야 0페이지가 1페이지가 됨
-        int startPage = Math.max(nowPage - 3, 1); // start페이지는 1일 수 밖에 없으므로 Math.max를 활용하여 매개값 2개중 1이 반환될 수 있도록 처리
-        int endPage = Math.min(nowPage + 3, list.getTotalPages()); // 위와 같은 원리로 마지막페이지 처리 - getTotalPages()는 전체 페이지의 수를 말함
+        int startPage = Math.max(nowPage - 2, 1); // start페이지는 1일 수 밖에 없으므로 Math.max를 활용하여 매개값 2개중 1이 반환될 수 있도록 처리
+        int endPage = Math.min(nowPage + 2, list.getTotalPages()); // 위와 같은 원리로 마지막페이지 처리 - getTotalPages()는 전체 페이지의 수를 말함
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
