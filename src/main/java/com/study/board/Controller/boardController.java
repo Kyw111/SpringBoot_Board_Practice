@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,12 @@ public class boardController {
         return "boardwrite";
     }
     @PostMapping("/board/writepro")
-    public String boardWritePro(Board board, Model model, MultipartFile file) throws Exception {
-        boardService.write(board, file);
+    public String boardWritePro(Board board, Model model, MultipartFile file, Authentication authentication) throws Exception {
+
+
+        String username = authentication.getName();
+        boardService.write(board, file, username);
+
         model.addAttribute("message", "글 작성이 완료되었습니다");
         model.addAttribute("searchUrl", "/board/list");
         model.addAttribute("image", "/board/view"); //상세페이지에서 이미지보이게
@@ -84,7 +89,7 @@ public class boardController {
     }
 
     @PostMapping("/board/update/{id}") //url의 id를 @PathVariable이 Integer id로 넣어줌
-    public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, MultipartFile file) throws Exception{//boardWrite와 똑같이 board로 받아옴
+    public String boardUpdate(@PathVariable("id") Integer id, Board board, Model model, MultipartFile file, String username) throws Exception{//boardWrite와 똑같이 board로 받아옴
 
         Board boardTemp = boardService.boardView(id); // 기존에 작성했던 글이 담겨져서 옴
         boardTemp.setTitle(board.getTitle()); //덮어씌우기 - 기존의 내용에다가 새로 작성한 글의 내용을
@@ -93,7 +98,7 @@ public class boardController {
         model.addAttribute("message", "글 수정 완료"); // 수정완료 메세지 띄우기
         model.addAttribute("searchUrl", "/board/list"); //메세지 띄워주고 list페이지로 이동
 
-        boardService.write(boardTemp, file); // 수정한 내용 레포지토리에 반영
+        boardService.write(boardTemp, file, username); // 수정한 내용 레포지토리에 반영
         return "message";
     }
 }

@@ -1,7 +1,9 @@
 package com.study.board.service;
 
 import com.study.board.entity.Board;
+import com.study.board.entity.User;
 import com.study.board.repository.BoardRepository;
+import com.study.board.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +23,11 @@ public class BoardService {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     //새글 작성
-    public void write(Board board, MultipartFile file) throws Exception {
+    public void write(Board board, MultipartFile file, String username) throws Exception {
         // 파일을 업로드할 저장경로부터 지정
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
         // 파일 이름에 붙여줄 랜덤id를 생성
@@ -36,6 +41,9 @@ public class BoardService {
 
         board.setFilename(fileName); // DB에다가 fileName을 저장하게 함
         board.setFilepath("/files/" + fileName); // DB에다가 file경로를 저장하게 함
+
+        User user = userRepository.findByUsername(username);
+        board.setUser(user);
 
         boardRepository.save(board);
     }
