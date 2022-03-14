@@ -6,7 +6,7 @@
 * 스프링 시큐리티를 사용하여 로그인된 사용자만 게시글을 작성하고 수정 삭제 등을 할 수 있도록 만들었습니다.
 * 이미지 파일 업로드 기능을 구현하여 게시글 작성시 글 내용과 함께 이미지도 등록이 가능합니다
 ---
-![](C:\My_study_board\board\md_img\main.png)
+![](https://github.com/Kyw111/SpringBoot_Board_Practice/blob/main/md_img/main.PNG)
 첫 메인페이지 화면입니다 우측 상단에 로그인, 회원가입을 눌러 로그인과 회원가입을 진행할 수 있습니다.
 
 ![](C:\My_study_board\board\md_img\login.png)
