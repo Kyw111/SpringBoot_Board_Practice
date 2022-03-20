@@ -1,4 +1,4 @@
-package com.study.board.Controller;
+package com.study.board.controller;
 
 import com.study.board.entity.Board;
 import com.study.board.service.BoardService;
@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @ComponentScan({"com.study.board"})
@@ -47,8 +46,24 @@ public class boardController {
 
     @GetMapping("/board/list")
     public String boardList(Model model, // 0페이지가 1페이지, 한번에 10개의 게시글 보이게, 정렬은 id로, 정렬순서는 역순(DESC)
-                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable){
-        Page<Board> list = boardService.boardList(pageable);
+                            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+                            String searchKeyword, String searchUser){
+
+        Page<Board> list = null;
+
+        if(searchKeyword == null){
+            list = boardService.boardList(pageable); // 검색어가 없을때는 기존 list 반환
+        }else{
+            list = boardService.boardSearchList(searchKeyword, pageable); // 검색어가 들어왔을때 검색기능이 포함된 list를 반환
+        }
+
+//        if(searchUser == null){
+//            list = boardService.boardList(pageable);
+//        }else{
+//            list = boardService.boardSearchUserList(searchUser, pageable);
+//        } // User검색 실습
+
+//        Page<Board> list = boardService.boardList(pageable);
 
         int nowPage = list.getPageable().getPageNumber() + 1; // pageable에서 넘어온 현재페이지를 담아줌 - 1을 더해줘야 0페이지가 1페이지가 됨
         int startPage = Math.max(nowPage - 2, 1); // start페이지는 1일 수 밖에 없으므로 Math.max를 활용하여 매개값 2개중 1이 반환될 수 있도록 처리
@@ -67,7 +82,6 @@ public class boardController {
         model.addAttribute("board", boardService.boardView(id));
         return "boardview";
     }
-
 
 //    @GetMapping("/board/delete")
 //    public String boardDelete(Integer id){

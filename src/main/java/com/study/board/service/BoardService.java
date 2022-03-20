@@ -54,6 +54,16 @@ public class BoardService {
         return boardRepository.findAll(pageable);
     }
 
+    public Page<Board> boardSearchList(String searchKeyword, Pageable pageable){
+
+        return boardRepository.findByTitleContaining(searchKeyword, pageable);
+    }
+
+//    public Page<Board> boardSearchUserList(String searchUser, Pageable pageable){ // User 검색기능 구현 연습
+//
+//        return boardRepository.findByUserContaining(searchUser, pageable);
+//    }
+
     //특정 게시글 조회 - 클래스를 Board로 해줘야 함
     public Board boardView(Integer id){
         return boardRepository.findById(id).get();

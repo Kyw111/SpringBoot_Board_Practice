@@ -1,4 +1,4 @@
-package com.study.board.Controller;
+package com.study.board.controller;
 
 import com.study.board.entity.User;
 import com.study.board.service.UserService;

@@ -88,7 +88,7 @@
                 <a class="page-link" href="#">Previous</a>
             </li>
             <li th:each="page : ${#numbers.sequence(startPage, endPage)}"class="page-item">
-                <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1})}" th:text="${page}" class="page-link"></a>
+                <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}" class="page-link"></a>
                 <strong><a th:if="${page == nowPage}" th:text="${page}" class="page-link" style="color:red"></a></strong>
             </li>
             <li>
@@ -96,6 +96,13 @@
             </li>
         </ul>
     </nav> <!-- 페이지네이션 끝-->
+
+    <!-- 검색 기능 폼태그 -->
+        <form th:action="@{/board/list}" method="get">
+            <input type="text" name="searchKeyword">
+            <button type="submit" class="btn btn-sm btn-primary">검색</button>
+        </form>
+    <!-- 검색 기능 폼태그 끝 -->
 
       <div th:replace="fragments/common :: footer">
       </div> <!-- footer 끝-->

@@ -27,6 +27,7 @@ public class User {
 
     @OneToMany(mappedBy = "user") // 양방향 맵핑
     private List<Board> boards = new ArrayList<>();
-
+    //java.lang.IllegalArgumentException: Parameter value [%kyw%] did not match expected type [com.study.board.entity.User (n/a)]
+    // 작성자 id 검색기능 여기가 문제인건가?
 
 }
